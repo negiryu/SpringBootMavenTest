@@ -1,0 +1,59 @@
+package com.example.demo.entity;
+
+import java.util.Date;
+
+import lombok.Data;
+
+/**
+ * ユーザー情報
+ * データベースの情報を取得するためのクラス
+ */
+// @Entity
+ @Data
+// @Table(name="user")
+ public class User{
+	 
+	 /**
+	  * ID
+	  */
+//	 @Id
+//	 @Column(name="id")
+//	 @GeneratedValue(strategy=GenerationType.IDENTITY)
+	 private Long id;
+	 
+	 /**
+	  * 名前
+	  */
+//	 @Column(name="name")
+	 private String name;
+	 
+	 /**
+	  * 住所
+	  */
+//	 @Column(name="address")
+	 private String address;
+	 
+	 /**
+	  * 電話番号
+	  */
+//	 @Column(name="phone")
+	 private String phone;
+	 
+	 /**
+	  * 登録日時
+	  */
+//	 @Column(name="create_date")
+	 private Date create_date;
+	 
+	 /**
+	  * 更新日時
+	  */
+//	 @Column(name="update_date")
+	 private Date update_date;
+	 
+	 /**
+	  * 削除日時
+	  */
+//	 @Column(name="delete_date")
+	 private Date delete_date;
+ }
