@@ -43,6 +43,7 @@ public class UserController{
 	@RequestMapping(value="/user/id_search",method=RequestMethod.POST)
 	public String search(@ModelAttribute UserSearchRequest userSearchRequest,Model model) {
 		User user = userService.search(userSearchRequest);
+		System.out.println(user);
 		model.addAttribute("userinfo",user);
 		return "user/search";
 	}

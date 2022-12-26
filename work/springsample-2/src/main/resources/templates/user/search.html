@@ -1,50 +1,92 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="/css/list.css">
-    <title>ユーザー情報検索</title>
-</head>
-
+<head th:replace="common/head :: head_fragment(title = 'ユーザー情報一覧', scripts = ~{::script}, links = ~{::link})"></head>
 <body>
-    <header></header>
-
-    <body>
-        <section>
-         	<h1>ユーザー情報検索</h1>
-    		<form th:action="@{/user/id_search}" th:object="${userSearchRequest}" th:method="post">
-	        	<div>
-	            	ID：<input type="text" th:field="*{id}" size="40" />
-	        	</div>
-	        	<br />
-	        	<div>
-	            	<input type="submit" value="検索" style="width: 100px;" />
-	        	</div>
-	        	<br />
-    		</form>
-        </section>
-        <div th:if="${userinfo}">
-            <table th:object="${userinfo}">
-                <tr>
-                    <th class="cell_title">名前</th>
-                    <td th:text="*{name}"></td>
-                </tr>
-                <tr>
-                    <th class="cell_title">住所</th>
-                    <td th:text="*{address}"></td>
-                </tr>
-                <tr>
-                    <th class="cell_title">電話番号</th>
-                    <td th:text="*{phone}"></td>
-                </tr>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <div class="container-fluid">
+		    <a class="navbar-brand" th:href="@{/}">UserInfo</a>
+		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		        <li class="nav-item">
+		          <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" th:href="@{/}">Link</a>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" th:href="@{/}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            Dropdown
+		          </a>
+		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		            <li><a class="dropdown-item" th:href="@{/}">Action</a></li>
+		            <li><a class="dropdown-item" th:href="@{/}">Another action</a></li>
+		            <li><hr class="dropdown-divider"></li>
+		            <li><a class="dropdown-item" th:href="@{/}">Something else here</a></li>
+		          </ul>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link disabled" th:href="@{/}" tabindex="-1" aria-disabled="true">Disabled</a>
+		        </li>
+		      </ul>
+		      <form class="d-flex" th:action="@{/user/search}" th:object="${userSearchRequest}" th:method="post">
+				<div class="form-group">
+		        	<input class="form-control me-2" th:field="*{name}" type="text" placeholder="氏名" aria-label="Search">
+		        </div>
+		        <button class="btn btn-outline-success" type="submit">Search</button>
+		      </form>
+		    </div>
+		  </div>
+		</nav>
+	</header>
+    <div class="container">
+        <div class="text-end mt-3">
+            <a th:href="@{/user/add}" class="btn btn-primary">新規登録はこちら</a>
+        </div>
+        <div th:if="${userlist}">
+            <table class="table table-striped mt-5">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名前</th>
+                        <th>住所</th>
+                        <th>電話番号</th>
+                        <th>更新日時</th>
+                        <th>登録日時</th>
+                        <th>削除日時</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${userlist}" th:object="${user}" class="align-middle">
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{address}"></td>
+                        <td th:text="*{phone}"></td>
+                        <td th:text="${#dates.format(user.create_date, 'yyyy/MM/dd')}"></td>
+                        <td th:text="${#dates.format(user.update_date, 'yyyy/MM/dd')}"></td>
+                        <td th:text="${#dates.format(user.delete_date, 'yyyy/MM/dd')}"></td>
+                        <td>
+                            <a th:href="@{/user/{id}/edit(id=*{id})}" class="btn btn-primary">編集</a>
+                            <a th:href="@{/user/{id}/delete(id=*{id})}" class="btn btn-secondary">削除</a>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-        </div>   
-    </body>
-    <footer></footer>
+            <nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-end">
+			    <li class="page-item disabled">
+			      <a class="page-link" th:href="@{/}" tabindex="-1" aria-disabled="true">Previous</a>
+			    </li>
+			    <li class="page-item"><a class="page-link" th:href="@{/}">1</a></li>
+			    <li class="page-item"><a class="page-link" th:href="@{/}">2</a></li>
+			    <li class="page-item"><a class="page-link" th:href="@{/}">3</a></li>
+			    <li class="page-item">
+			      <a class="page-link" th:href="@{/}">Next</a>
+			    </li>
+			  </ul>
+			</nav>
+        </div>
+    </div>
 </body>
-
 </html>

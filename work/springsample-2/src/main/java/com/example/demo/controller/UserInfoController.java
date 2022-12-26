@@ -27,6 +27,13 @@ import com.example.demo.service.UserInfoService;
 @Controller
 public class UserInfoController {
 
+	/**
+	 * リダイレクト設定
+	 */
+	@GetMapping(value="/")
+	public String redirectRoute(Model model) {
+		return "redirect:user/list";
+	}
     /**
      * ユーザー情報 Service
      */
